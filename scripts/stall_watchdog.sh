@@ -57,7 +57,7 @@ case "${1:-}" in
             --arg threshold "$threshold" \
             '{trigger:"stall", run_id:$run, timestamp:$ts, detected_by:"stall_watchdog.sh",
               details:{elapsed_seconds:$elapsed, threshold_seconds:$threshold},
-              recommended_rescue_lead:"gpt-5.5"}' \
+              recommended_rescue_lead:"gpt-5.6"}' \
             > "$trigger"
         else
           printf '{"trigger":"stall","run_id":"%s","timestamp":"%s"}\n' "$run_id" "$(ts_iso)" > "$trigger"

@@ -78,7 +78,7 @@ Fires automatically (the background-agent watches via the Stop hook + a periodic
 check) on: N consecutive failures on one unit (N=3), unattended stall (no output/tool calls
 for `STALL_MINUTES`, default 12), a dead spawned subprocess, or a hook misfiring three times
 in a row. It reads the full session log, spawns a fresh-context 2-model consortium
-(gpt-5.5 + opus-latest, both xhigh), triple-gates their fix, then clears + re-pastes via the
+(gpt-5.6 + opus-latest, both xhigh), triple-gates their fix, then clears + re-pastes via the
 tmux relay to restart from the last checkpoint. Each cycle also runs a self-improvement pass.
 Full mechanics: **`references/rescue-mode.md`**.
 

@@ -39,7 +39,7 @@ Two fresh contexts spawn in parallel:
 
 | Slot | Model               | Effort |
 |------|---------------------|--------|
-| Lead | gpt-5.5 (router)    | xhigh  |
+| Lead | gpt-5.6 (router)    | xhigh  |
 | Co-pilot | opus-latest        | xhigh  |
 
 Each reads the diagnosis + a curated subset of the session log (just enough to be informed, not enough to inherit the stuck thinking). They independently propose:

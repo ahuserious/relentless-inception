@@ -135,7 +135,7 @@ openrouter)
     KEY=$(awk -F= '/^OPENROUTER_API_KEY=/{print $2; exit}' "$HOME/.claude/.env")
   fi
   [[ -n "$KEY" ]] || { fail_verdict "$OUT" openrouter "OPENROUTER_API_KEY unavailable at gate time"; exit 0; }
-  PANEL_JSON=${MODELS:-'["anthropic/claude-opus-4.8","openai/gpt-5.5","google/gemini-3.1-pro"]'}
+  PANEL_JSON=${MODELS:-'["anthropic/claude-opus-4.8","openai/gpt-5.6","google/gemini-3.1-pro"]'}
   [[ "$PANEL_JSON" == \[* ]] || PANEL_JSON=$(printf '%s' "$MODELS" | jq -R 'split(",")')
   PROMPT_FILE=$(mktemp); build_panel_prompt "fusion" "$PROMPT_FILE"
   BODY=$(jq -n --rawfile prompt "$PROMPT_FILE" --argjson panel "$PANEL_JSON" --arg effort "$EFFORT" \

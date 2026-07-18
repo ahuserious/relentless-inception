@@ -8,7 +8,7 @@ You are seeing the situation for the *first time*. The orchestrator's context is
 
 | Slot     | Model           | Effort   | Routing       |
 |----------|-----------------|----------|---------------|
-| lead     | gpt-5.5         | xhigh    | openrouter    |
+| lead     | gpt-5.6         | xhigh    | openrouter    |
 | co-pilot | opus-latest     | xhigh    | anthropic     |
 
 Always xhigh. Always.
