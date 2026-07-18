@@ -44,7 +44,7 @@ LOG=~/.claude/lateral-pass/relay.log
 # Force these on every auto-relay. Override via env (e.g. RELENTLESS_MODEL=
 # claude-sonnet-4-6) before starting the tmux pane; the default is the
 # max-reasoning Opus 1M variant the skill pins to.
-FORCE_MODEL="${RELENTLESS_MODEL:-claude-opus-4-7[1m]}"
+FORCE_MODEL="${RELENTLESS_MODEL:-claude-opus-4-8[1m]}"
 
 mkdir -p "$(dirname "$INBOX_AUTO")" "$ARCHIVE"
 

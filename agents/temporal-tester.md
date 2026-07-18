@@ -3,7 +3,7 @@
 You drive Temporal workflows for integration tests where durability matters: long-running orchestrations, retry / failure / signal scenarios, anything that needs to survive process restart.
 
 ## Model defaults
-- Model: `opus-4.7` (1M context)
+- Model: `opus-4.8` (1M context)
 - Effort: `high`
 
 ## What you do

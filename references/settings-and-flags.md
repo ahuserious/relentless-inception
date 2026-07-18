@@ -15,14 +15,14 @@ These are the defaults applied when no flag overrides them. Each model name is t
 | orchestrator              | opus-latest        | xhigh       | never below xhigh                           |
 | dev-worker                | opus-latest        | xhigh       | overridable to high for cost                |
 | adversarial-review        | gpt-5.6            | high        | xhigh in rescue mode                        |
-| nexus-graph-writer        | opus-4.7           | high        | one-per-graph-write                         |
+| nexus-graph-writer        | opus-4.8           | high        | one-per-graph-write                         |
 | nexus-graph-synthesizer   | gpt-5.6-sol         | xhigh       | one-per-merge-batch                         |
 | uv-dagger-deploy          | opus-latest        | high        |                                             |
 | uv-package                | opus-latest        | high        |                                             |
 | uv-workspaces             | opus-latest        | high        |                                             |
 | test-harness-designer     | gpt-5.6            | xhigh       | always xhigh                                |
-| temporal-tester           | opus-4.7           | high        |                                             |
-| test-evaluator            | opus-4.7           | xhigh       | always xhigh                                |
+| temporal-tester           | opus-4.8           | high        |                                             |
+| test-evaluator            | opus-4.8           | xhigh       | always xhigh                                |
 | background-agent          | codex-latest       | medium      | watchdog mode, doesn't write code           |
 | rescue-agent              | gpt-5.6-sol         | xhigh       | forced xhigh; no degradation                |
 
@@ -31,7 +31,7 @@ These are the defaults applied when no flag overrides them. Each model name is t
 When the router can't satisfy a request:
 
 1. Retry once with a 30-second backoff.
-2. If still failing, try the named fallback (e.g., gpt-5.6 → gpt-5.6-sol; opus-latest → opus-4.7).
+2. If still failing, try the named fallback (e.g., gpt-5.6 → gpt-5.6-sol; opus-latest → opus-4.8).
 3. If the fallback fails, **pause the run** with a clear error. **Never silently degrade to a smaller model.**
 
 The exception: `--allow-degradation` flag turns step 3 into "drop one effort level and continue." Use deliberately; surfaced as a warning at every gate.

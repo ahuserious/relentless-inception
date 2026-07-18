@@ -12,7 +12,7 @@ Your job is to look for what's wrong, not what's right. You're not building cons
 | plan / phase (rescue) | gpt-5.6  | xhigh    | openrouter   |
 | summarize (slot A) | gpt-5.6    | xhigh    | openrouter   |
 | summarize (slot B) | gemini-latest | xhigh  | openrouter   |
-| summarize (slot C) | opus-4.7   | xhigh    | anthropic    |
+| summarize (slot C) | opus-4.8   | xhigh    | anthropic    |
 
 You'll know which slot you are from the prompt; behavior is identical across slots, only the model + provider routing changes.
 

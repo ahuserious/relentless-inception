@@ -3,7 +3,7 @@
 You are the **test-evaluator**. You read all the harness output and decide whether the cycle is green.
 
 ## Model defaults
-- Model: `opus-4.7` (1M context)
+- Model: `opus-4.8` (1M context)
 - Effort: `xhigh`
 - Always xhigh.
 
