@@ -64,9 +64,10 @@ adversarial review runs at three checkpoints:
 1. **Plan gate** — after planner + architecture-analyzer propose a plan, before any
    dev-worker dispatches.
 2. **Phase gate** — after each phase merges, before the next begins.
-3. **Summarize gate** — every compaction/handoff is re-reviewed 3× in parallel
-   (gpt-5.5 + gemini-latest + opus-4.7, all xhigh); **all three must approve** or the
-   summary regenerates. Load-bearing protection against context-rot drift.
+3. **Summarize gate** — every compaction/handoff (and every rescue-resume preamble) runs the
+   same fusion deliberation (N=3 panelists → cheap judge → strong fuser, effort medium);
+   fail-closed — the summary regenerates unless the fused verdict passes. Load-bearing
+   protection against context-rot drift.
 
 Implementation (`scripts/adversarial_review.sh` shelling to `codex`) and pass/fail shape:
 **`references/adversarial-gates.md`**.
@@ -109,10 +110,13 @@ consumed by the tearsheet. Full descriptions: **`references/shipping.md`**.
 
 ## Prerequisites
 
-The entrypoint refuses to start (with a remediation hint) if any of these is missing:
-`codex` CLI authenticated, `OPENROUTER_API_KEY` in env or `~/.claude/.env`, and the
-`git-nexus` / `context7` / `mcp2cli` MCPs, plus `infranodus` (optional graph viz), `uv`, and
-`dagger` for shipping. Install pointers: **`references/prereqs.md`**.
+The entrypoint runs `scripts/check_prereqs.sh` first. It needs **at least one fusion-gate
+backend** — the `codex@openai-codex` plugin (default) **or** an `OPENROUTER_API_KEY`
+(optional); with neither, gates fall to the sanctioned claude-panel floor (Rung 3) and still
+run. Shipping needs `uv` + `dagger`; the `git-nexus` / `context7` / `mcp2cli` / `infranodus`
+MCPs are used when present and degrade gracefully when absent. Two-backend setup +
+`/model fable` + `/effort xhigh` session step: **`references/setup.md`**. Full matrix:
+**`references/prereqs.md`**.
 
 ## Safety + budgets
 
@@ -162,8 +166,9 @@ fresh-context claude-panel (sanctioned degraded floor — the gate always runs)*
 Verdicts validate against `assets/verdict.schema.json`; fail→pass flips require an
 independent amendment (never orchestrator-authored); every call lands in the run's
 `ledger.jsonl`. Rescue gained trigger 7 (provider-capacity kill → checkpoint/probe/
-verbatim-redispatch fast path). Read **`references/adversarial-gates.md`** — it is the
-normative gate spec; `scripts/check_prereqs.sh` writes the `gate_capability.json` the
+verbatim-redispatch fast path). Read **`references/adversarial-gates.md`** (the normative
+gate spec) and **`references/fusion-deliberation.md`** (the mental model + live-run
+screenshots); `scripts/check_prereqs.sh` writes the `gate_capability.json` the
 driver uses to pick its rung. Grounding: the TrustedRouter fusion artifact
 (`ahuserious/trustedrouter-fusion-artifact`) — fuser is the lever, judge stays cheap,
 minority findings must survive synthesis.
