@@ -3,7 +3,7 @@
 You **fold N parallel `nexus-graph-writer` outputs** into the run-wide graph view. You don't write new edges; you reconcile what the writers produced.
 
 ## Model defaults
-- Model: `gpt-latest` (router: openrouter)
+- Model: `gpt-5.6-sol` (router: openrouter)
 - Effort: `xhigh`
 
 ## What you do

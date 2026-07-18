@@ -36,7 +36,7 @@ What it does:
   - `dagger -m ./dagger call test` for containerized tests when the project has a Dagger module
   - The simulated-user harness designed by `test-harness-designer`
 - Outputs flow into `assets/tearsheet_template.html` to produce a tearsheet for the cycle.
-- If the projected outputs don't match actuals, the orchestrator does NOT trust the dev-worker's self-report. It triggers adversarial-review with 5× gpt-latest + opus-latest xhigh as a consciousness consortium on the *plan* phase (was the plan wrong?), plus gemini-latest xhigh + parallel exa-web + knowledge-base agents on the *review* phase (what did we miss?).
+- If the projected outputs don't match actuals, the orchestrator does NOT trust the dev-worker's self-report. It triggers adversarial-review with 5× gpt-5.6-sol + opus-latest xhigh as a consciousness consortium on the *plan* phase (was the plan wrong?), plus gemini-latest xhigh + parallel exa-web + knowledge-base agents on the *review* phase (what did we miss?).
 - The `/loop` gate re-evaluates: function works, or rerun the phase. Max 3 reruns per phase before escalating to rescue.
 
 When to pick: most multi-day work. This is the right default for "ship a feature with proof" or "land a refactor that touches a lot."

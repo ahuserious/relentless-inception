@@ -211,7 +211,7 @@ codex)
     exit 43
   fi
   # Judge (cheap; never writes the verdict) — panel reviews in, compact JSON out.
-  JUDGE_MODEL="${JUDGE_MODEL:-gpt-5.4-mini}"
+  JUDGE_MODEL="${JUDGE_MODEL:-gpt-5.6-terra}"
   judge_prompt=$(mktemp); judge_out=$(mktemp)
   {
     printf 'You are the JUDGE in a fusion deliberation for gate=%s. Read the N panel reviews below.\n' "$GATE"
