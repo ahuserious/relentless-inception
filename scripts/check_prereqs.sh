@@ -69,7 +69,7 @@ RUNG1="absent"
 if have_key OPENROUTER_API_KEY; then
   http=$(curl -sS -o /tmp/or_probe.$$ -w '%{http_code}' --max-time 30 \
     -H "Authorization: Bearer $(key_value OPENROUTER_API_KEY)" -H 'Content-Type: application/json' \
-    -d '{"model":"openrouter/fusion","plugins":[{"id":"fusion","analysis_models":["openai/gpt-5.5","anthropic/claude-opus-4.8"]}],"messages":[{"role":"user","content":"Reply OK"}],"max_tokens":8}' \
+    -d '{"model":"openrouter/fusion","plugins":[{"id":"fusion","analysis_models":["openai/gpt-5.6","anthropic/claude-opus-4.8"]}],"messages":[{"role":"user","content":"Reply OK"}],"max_tokens":8}' \
     https://openrouter.ai/api/v1/chat/completions 2>/dev/null || echo 000)
   rm -f /tmp/or_probe.$$
   case "$http" in

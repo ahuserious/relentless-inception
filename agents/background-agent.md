@@ -34,7 +34,7 @@ Each invocation:
   "details": {
     "..."
   },
-  "recommended_rescue_lead": "gpt-5.5" | "opus-latest"
+  "recommended_rescue_lead": "gpt-5.6" | "opus-latest"
 }
 ```
 

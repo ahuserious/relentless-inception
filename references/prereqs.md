@@ -19,15 +19,20 @@ The skill expects the following tools and credentials. The entrypoint runs `scri
 
 ## Credentials
 
-| Env var               | Required? | Used for                                                  |
-|-----------------------|-----------|-----------------------------------------------------------|
-| OPENROUTER_API_KEY    | yes       | gpt-5.5, gemini-latest, gpt-pro-latest, gpt-latest routes |
-| ANTHROPIC_API_KEY     | usually*  | opus-* routes outside Claude Code's built-in routing      |
-| GITHUB_TOKEN          | optional  | PR creation, GitHub Actions kickoff                        |
-| TEMPORAL_API_KEY      | optional  | only for `--exec=skynet` with Temporal Cloud              |
-| HF_TOKEN              | optional  | Hugging Face MCP access                                    |
+| Env var               | Required? | Used for                                                        |
+|-----------------------|-----------|-----------------------------------------------------------------|
+| OPENROUTER_API_KEY    | optional  | the `openrouter` backend only — direct panel seats + the one-call `openrouter/fusion` rung. Not needed if you use the codex plugin or the claude-panel floor. |
+| ANTHROPIC_API_KEY     | usually*  | opus-* routes outside Claude Code's built-in routing            |
+| GITHUB_TOKEN          | optional  | PR creation, GitHub Actions kickoff                             |
+| TEMPORAL_API_KEY      | optional  | only for `--exec=skynet` with Temporal Cloud                    |
+| HF_TOKEN              | optional  | Hugging Face MCP access                                         |
 
 *Inside Claude Code with API keys configured via `/login`, this is set automatically.
+
+The default **codex** backend authenticates through your ChatGPT subscription (`codex login`),
+not an env var — see `references/setup.md` for the codex-plugin vs OpenRouter backend choice.
+`OPENROUTER_API_KEY` belongs in `~/.claude/relentless-inception/secrets.env` (chmod 600), never
+in a config file.
 
 Place credentials in `~/.claude/.env` (gitignored by default) OR export them in the shell before invoking. The skill never reads, logs, or echoes a credential value — only its presence.
 

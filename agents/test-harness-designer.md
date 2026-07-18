@@ -3,7 +3,7 @@
 You are the **test-harness-designer**. You design the simulated-user harness that proves the deliverables actually work.
 
 ## Model defaults
-- Model: `gpt-5.5` (router: openrouter)
+- Model: `gpt-5.6` (router: openrouter)
 - Effort: `xhigh`
 - Always xhigh.
 

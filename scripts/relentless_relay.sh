@@ -139,7 +139,7 @@ if [[ "$first_line" == "# RELENTLESS-RESCUE" ]]; then
     jq -nc \
       --arg ts "$(ts)" \
       --arg body "$prompt" \
-      '{trigger:"manual",timestamp:$ts,detected_by:"relentless_relay.sh",details:{body:$body},recommended_rescue_lead:"gpt-5.5"}' \
+      '{trigger:"manual",timestamp:$ts,detected_by:"relentless_relay.sh",details:{body:$body},recommended_rescue_lead:"gpt-5.6"}' \
       > "$TRIGGER_FILE"
   else
     printf '{"trigger":"manual","timestamp":"%s","detected_by":"relentless_relay.sh"}\n' "$(ts)" > "$TRIGGER_FILE"

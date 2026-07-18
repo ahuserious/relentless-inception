@@ -4,6 +4,8 @@ A long-running autonomous orchestrator **skill for [Claude Code](https://claude.
 
 > v0.2.1 — panel/judge/fuser fully user-configurable; codex (ChatGPT subscription) and OpenRouter backends, either or both.
 
+![A fusion gate mid-run — Map and Panel complete, Fuse (judge + fuser) in progress](docs/img/fusion-panel-fuse.png)
+
 ## Prerequisites
 
 1. **Claude Code** (CLI or desktop).
@@ -17,6 +19,21 @@ A long-running autonomous orchestrator **skill for [Claude Code](https://claude.
 5. `jq`, `git`, `docker`, `python3`, `perl`, `curl` on PATH (`scripts/check_prereqs.sh` verifies everything and live-probes your model seats).
 
 ## Install
+
+**Plugin** (managed updates — the repo root is itself the plugin):
+
+```
+/plugin marketplace add ahuserious/relentless-inception
+/plugin install relentless-inception@ahuserious
+```
+
+**One-shot installer** (clone + config scaffold + preflight; idempotent, never overwrites your config):
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/ahuserious/relentless-inception/main/install.sh | bash
+```
+
+**Manual clone** (plain skill directory — `SKILL.md` is at the repo root):
 
 ```bash
 git clone https://github.com/ahuserious/relentless-inception ~/.claude/skills/relentless-inception
@@ -36,7 +53,19 @@ chmod 600 ~/.claude/relentless-inception/secrets.env
 ~/.claude/skills/relentless-inception/scripts/check_prereqs.sh
 ```
 
-Invoke from any Claude Code chat: `/relentless-inception <your multi-day build task>`.
+### Set your session (before every run)
+
+The **fuser inherits your Claude Code session model** (it runs as `claude-code-session`), and
+the fuser is the highest-leverage seat — so put your session on your strongest model first:
+
+```
+/model fable
+/effort xhigh
+```
+
+Then invoke from any chat: `/relentless-inception <your multi-day build task>`.
+
+Full setup walkthrough (both backends, session, config, preflight): **[references/setup.md](references/setup.md)**.
 
 ## Configure your fusion panel
 
@@ -60,18 +89,42 @@ Invoke from any Claude Code chat: `/relentless-inception <your multi-day build t
 - **Fuser = the model currently selected in your Claude Code session**, always a fresh instance. Empirically the fuser is the lever (~18-pt quality swing); the judge barely matters, so a cheap judge is always safe.
 - **Temperature** applies only to openrouter-direct calls (panel 1.0, judge pinned 0). Don't temp-tune reasoning models — OpenAI o-series/gpt-5.x reasoning ignore or reject it, Claude extended thinking requires temp=1, DeepSeek-R1/Gemini thinking manage sampling internally. Temperature is not a diversity mechanism; diversity comes from distinct models and personas.
 
+## Multimodel deliberation
+
+Every gate is a **fusion deliberation**, not a single reviewer: `Map` (assemble the review
+bundle) → `Panel` (N diverse panelists review independently) → `Fuse` (a cheap judge structures
+the reviews, then a strong fuser writes the verdict). The fuser is the lever — it must preserve
+lone-correct minority findings, never vote or average.
+
+A live gate (`prd-gap-fusion-plan`, `sol/fable/opus` panel), with the session on Fable 5:
+
+![Invoking a fusion gate with the session on Fable 5](docs/img/fusion-invoke-fable.png)
+
+Mid-run — `Map ✓`, `Panel ✓`, `Fuse` in progress. The Fuse phase shows the two synthesis seats:
+`judge:fable-low` (done, 45.6k tok) and `fuser:fable-xhigh` — the `fable-xhigh` fuser is exactly
+your `/model fable` + `/effort xhigh` session propagating into the highest-leverage seat:
+
+![A fusion gate mid-run: Map and Panel done, Fuse in progress](docs/img/fusion-panel-fuse.png)
+
+Full mental model + how each seat maps to config: **[references/fusion-deliberation.md](references/fusion-deliberation.md)**.
+
 ## What's inside
 
 | Path | What |
 |------|------|
 | `SKILL.md` | Router: modes, team, triple gate, rescue, safety rails |
+| `references/setup.md` | **Full setup walkthrough**: install paths, session model/effort, both backends, config, preflight |
+| `references/fusion-deliberation.md` | The multimodel deliberation explained, with live-run screenshots |
 | `references/adversarial-gates.md` | **Normative fusion-gate spec**: roles, provider ladder, per-gate config, verdict schema, amendment protocol |
 | `references/rescue-mode.md` | Stall/kill recovery incl. provider-capacity fast path |
+| `references/prereqs.md` | Tool / credential / MCP matrix |
 | `scripts/check_prereqs.sh` | Preflight: tool checks + live ladder probes → `gate_capability.json` |
 | `scripts/adversarial_review.sh` | Gate driver: runs codex/openrouter seats, hands the pre-fusion bundle to the orchestrator (exit 42) |
 | `assets/verdict.schema.json` | Structured verdict with full provenance (`panel`, `judge_model`, `fuser_model`, `inputs_sha256`, ladder position, degradation flags) |
 | `assets/fusion.config.default.json` | The shipped default panel config |
 | `agents/` | Per-role prompt templates (panelist / judge / fuser roles included) |
+| `.claude-plugin/` | `plugin.json` + `marketplace.json` — makes the repo installable via `/plugin` |
+| `install.sh` | One-shot flat-clone installer |
 
 ## Design provenance
 
